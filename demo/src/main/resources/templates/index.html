@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apni Shop | Best Deals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; margin:0; padding-top:70px; }
+
+        .navbar{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:70px;
+            z-index:1000;
+            box-shadow:0 2px 10px rgba(0,0,0,0.2);
+            background-color: #232f3e !important;
+        }
+
+        .hero-section { 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; color: white; padding: 60px 0; text-align: center; 
+        }
+        
+        .product-card { border: none; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.2); }
+        
+        .btn-buy-now { 
+            background-color: #f43397; 
+            color: white; 
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-buy-now:hover { 
+            background-color: #d62a83; 
+            color: white; 
+        }
+     
+        /* AAPKA ORIGINAL SEARCH HOVER EFFECT */
+        .search-btn:hover {
+            background: linear-gradient(45deg,#99a4f5,#0b0e12) !important;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: 0.4s;
+        }
+
+        /* 🟢 NEW: WHATSAPP FLOATING BUTTON STYLE */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">APNI SHOP</a>
+            <form action="/" method="get" style="display:flex; align-items:center; margin-left: 30px;">
+                <input type="search" name="keyword" placeholder="Search for products..."
+                    style="width:280px; padding:8px 12px; border:2px solid #61a0fe; border-radius:6px; outline:none; font-size:14px;">
+                <button type="submit" class="search-btn" style="padding:8px 16px; border:none; background:linear-gradient(45deg,#0b0e12,#99a4f5); color:white; font-weight:bold; border-radius:6px; margin-left:5px;">
+                    Search
+                </button>
+            </form>
+            <div class="d-flex align-items-center">
+                <a href="/my-orders-login" class="btn btn-primary me-2 shadow-sm">
+                    📦 My Orders
+                </a>
+                
+                <a href="/cart" class="btn btn-outline-light position-relative">
+                    🛒 Cart <span class="badge bg-danger" th:text="${cartCount != null ? cartCount : 0}">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1 class="display-4 fw-bold">Latest Fashion & Gadgets</h1>
+        <p class="lead">Upto 70% Off on everything!</p>
+    </div>
+
+    <a href="https://wa.me/919027034292?text=Hello%2C%20mujhe%20ek%20help%20chahiye%20product%20ke%20baare%20mein!" 
+       class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div class="container my-5">
+        <h3 class="mb-4 fw-bold text-dark">Featured Products</h3>
+        <div class="row">
+            <div class="col-md-3 mb-4" th:each="product : ${products}">
+                <div class="card product-card h-100">
+                    <img th:src="@{'/productImages/' + ${product.imageName}}" class="card-img-top" style="height: 250px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold" th:text="${product.name}">Product Name</h5>
+                        <p class="h5 text-success mb-3">₹<span th:text="${product.price}">0</span></p>
+                        
+                        <a th:href="@{'/addToCart/' + ${product.id}}" class="btn btn-warning w-100 fw-bold mb-2">
+                            Add to Cart
+                        </a>
+                        
+                        <a th:href="@{'/buyNow/' + ${product.id}}" class="btn btn-buy-now w-100 fw-bold">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 text-center py-5" th:if="${#lists.isEmpty(products)}">
+                <p class="text-muted">Abhi koi product nahi hai. Admin panel se add karein!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white pt-4 pb-2 mt-5">
+        <div class="container text-center">
+            <p>&copy; All Rights Reserved @2026.</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Made with  in Bulandshahr</small>
+                <a href="/admin/login" class="text-secondary" style="text-decoration: none; font-size: 12px;">Admin Login</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

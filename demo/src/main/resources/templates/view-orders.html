@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Customer Orders | Admin Panel</title>
+    <style>
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .status-badge {
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 50px;
+        }
+        .btn-delete {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+        .search-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- <nav class="navbar navbar-dark bg-dark mb-4 shadow"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">📦 ORDER MANAGER</a>
+            <a href="/admin/dashboard?pass=admin123" class="btn btn-outline-light btn-sm">← Back to Products</a>
+        </div>
+    </nav>
+
+    <div class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-secondary">Recent Customer Orders</h2>
+            <span class="badge bg-primary px-3 py-2" th:text="${orders != null ? orders.size() : 0} + ' Orders Found'">0 Orders Found</span>
+        </div>
+
+        <div class="search-box shadow-sm border">
+            <form th:action="@{/admin/orders}" method="GET" class="row g-2">
+                <input type="hidden" name="pass" value="admin123">
+                
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">🔍</span>
+                        <input type="text" name="search" class="form-control border-start-0" 
+                               placeholder="Naam ya Mobile Number likhkar dhoondein..." 
+                               th:value="${param.search}">
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button class="btn btn-primary w-100 fw-bold" type="submit">Search</button>
+                    <a href="/admin/orders?pass=admin123" class="btn btn-outline-secondary w-100">Reset</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container shadow-sm border">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark text-white">
+                    <tr>
+                        <th class="ps-3">ID</th>
+                        <th>Customer Name</th>
+                        <th>Mobile Number</th>
+                        <th>Delivery Address</th>
+                        <th>Total Bill</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}" class="ps-3 text-muted small">1</td>
+                        <td>
+                            <div class="fw-bold text-dark" th:text="${order.customerName}">Naam</div>
+                        </td>
+                        <td th:text="${order.mobileNumber}">Number</td>
+                        <td>
+                            <small class="text-muted" th:text="${order.address}">Address</small>
+                        </td>
+                        <td class="text-primary fw-bold">₹<span th:text="${order.totalBill}">0</span></td>
+                        <td>
+                            <span class="status-badge bg-warning text-dark fw-bold" th:text="${order.status}">Pending</span>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{'/admin/order/delete/' + ${order.id}}" 
+                               class="btn btn-danger btn-sm shadow-sm btn-delete"
+                               onclick="return confirm('Kya aap is order ko hamesha ke liye hatana chahte hain?')">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(orders)}" class="text-center py-5">
+                <img src="https://cdn-icons-png.flaticon.com/512/11329/11329073.png" width="80" class="mb-3 opacity-25">
+                <h5 class="text-muted" th:text="${param.search != null} ? 'Koi matching order nahi mila!' : 'Abhi tak koi order nahi aaya hai.'">Result Message</h5>
+                <p class="small text-muted">Dibai aur Bulandshahr mein marketing karo bhai! 🚀</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

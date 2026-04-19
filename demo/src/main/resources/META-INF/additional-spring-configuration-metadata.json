@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "spring.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.url'"
+  },
+  {
+    "name": "spring.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.username'"
+  },
+  {
+    "name": "spring.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.password'"
+  },
+  {
+    "name": "spring.jpa.hibernate.ddl-auto",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.ddl-auto'"
+  },
+  {
+    "name": "spring.jpa.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.show-sql'"
+  },
+  {
+    "name": "file.upload-dir",
+    "type": "java.lang.String",
+    "description": "A description for 'file.upload-dir'"
+  },
+{
+    "name": "file.upload-dir",
+    "type": "java.lang.String",
+    "description": "A description for 'file.upload-dir'"
+  }
+]}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Order Confirmed ✅</title>
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .success-card { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .whatsapp-btn { background-color: #25d366; color: white; border: none; font-weight: 600; border-radius: 30px; transition: 0.3s; text-decoration: none; display: inline-block; width: 100%; padding: 12px; }
+        .whatsapp-btn:hover { background-color: #1ebe57; color: white; transform: translateY(-2px); }
+        .pdf-btn { border-radius: 30px; font-weight: 600; width: 100%; padding: 12px; }
+        .check-mark { font-size: 80px; color: #28a745; animation: bounce 1s infinite alternate; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="d-flex align-items-center" style="height: 100vh;">
+
+    <div class="container text-center">
+        <div class="card success-card p-5 mx-auto" style="max-width: 500px;">
+            <div class="check-mark">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="fw-bold text-success mb-3">Order Placed Successfully!</h2>
+            
+            <p class="text-muted mb-4">Aapka Order ID: <span class="fw-bold text-primary" th:text="'#' + ${orderId}">#000</span></p>
+            
+            <p class="small text-secondary mb-4">Bhai, aapka order mil gaya hai. Tasalli ke liye niche diye gaye options ka use karein:</p>
+
+            <div class="d-grid gap-3">
+                <a th:href="'https://wa.me/919027034292?text=Hello!%20Maine%20abhi%20ek%20order%20place%20kiya%20hai.%20Order%20ID:%20%23' + ${orderId}" 
+                   class="whatsapp-btn shadow-sm" target="_blank">
+                    <i class="fab fa-whatsapp me-2"></i> WhatsApp par Confirm Karein
+                </a>
+
+                <a th:href="@{'/downloadReceipt/' + ${orderId}}" 
+                   class="btn btn-primary">
+                    <i class="fas fa-file-pdf me-2"></i> Download Order Slip (PDF)
+                </a>
+            </div>
+
+            <hr class="my-4">
+            
+            <a href="/" class="text-decoration-none text-muted fw-bold">
+                <i class="fas fa-arrow-left me-1"></i> Wapas Shopping Karein
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
